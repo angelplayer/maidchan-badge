@@ -9,7 +9,7 @@ import (
 
 func main() {
 
-	http.Handle("/go", http.HandlerFunc(test))
+	http.Handle("/dev", http.HandlerFunc(test))
 	err := http.ListenAndServe(":4020", nil)
 	if err != nil {
 		log.Fatal("Server error:", err)
@@ -19,5 +19,12 @@ func main() {
 
 func test(res http.ResponseWriter, req *http.Request) {
 	res.Header().Set("content-type", "image/svg+xml")
-	badge.Create(res)
+
+	b := badge.StatusBadge{
+		Text:       "Service worker",
+		Color:      "#7b3be0",
+		Status:     "Online",
+		StatsColor: "#007ACC",
+	}
+	b.CreateSvg(res)
 }
